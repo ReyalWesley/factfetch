@@ -6,7 +6,6 @@ type buttonProps = {
 }
 
 const { handleClick } = defineProps<buttonProps>()
-
 </script>
 
 <template>

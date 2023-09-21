@@ -1,9 +1,12 @@
-export async function fetchFact(category: 'date' | 'math'): Promise<string | null> {
+export async function fetchFact(category: string): Promise<(any | string)[] | null> {
     try {
         const response = await fetch(`http://numbersapi.com/random/${category.toLowerCase()}`);
         if (response.ok) {
             const data = await response.text();
-            return data;
+            const now = new Date();
+            const options = { day: '2-digit', month: '2-digit', hour: '2-digit', minute: '2-digit' };
+            const date = Intl.DateTimeFormat('fr-FR', options).format(now);
+            return [ date, data ];
         } else {
             console.error(`Bad API request for: ${category}`);
             return null;

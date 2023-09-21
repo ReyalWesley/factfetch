@@ -1,39 +1,37 @@
 <script setup lang="ts">
-
 import Arrow_button from "@/components/arrow_button.vue";
 import { fetchFact } from "@/data/fetchApi";
 import { onMounted, ref } from "vue";
+import type { LogsType } from "@/components/cards/cards_list.vue";
 
-type CardProps = {
+export type CardProps = {
   category: string
   description: string
+  fetchLogs: (log: { date: any; description: any; category: string }) => LogsType[]
 }
 
 const props =  defineProps<CardProps>();
 
 const fact = ref<string | null>(null);
+const actualDate = ref<string | null>(null);
 
 onMounted(async () => {
-  fact.value = await fetchFact(props.category);
-  console.log(props.category);
+  await refetchFact();
 });
 
 const refetchFact = async () => {
-  fact.value = await fetchFact(props.category);
+  const [ date, data ] = await fetchFact(props.category);
+  fact.value = data;
+  actualDate.value = date;
+  props.fetchLogs({ category: props.category, description: data, date: date });
 };
-
-const capitalizeFirstLetter = (str: string): string => {
-  if (str.length === 0) return str;
-  return str.charAt(0).toUpperCase() + str.slice(1);
-};
-
 
 </script>
 
 <template>
   <div class="card">
     <section class="card_header">
-      <h3>A cool <span class="card_title">{{ capitalizeFirstLetter(category) }}</span> Fact</h3>
+      <h3>A cool <span class="card_title">{{ category }}</span> Fact</h3>
       <Arrow_button :handle-click="refetchFact"/>
     </section>
 
@@ -58,9 +56,10 @@ const capitalizeFirstLetter = (str: string): string => {
   align-items: center;
 }
 
-.card_title {
+.card_title span {
   font-weight: bold;
   text-decoration: underline;
+  text-transform: capitalize;
 }
 
 .description {
