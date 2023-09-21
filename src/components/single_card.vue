@@ -1,8 +1,8 @@
 <script setup lang="ts">
 
 import Arrow_button from "@/components/arrow_button.vue";
-import {fetchFact} from "@/data/fetchApi";
-import {onMounted, ref} from "vue";
+import { fetchFact } from "@/data/fetchApi";
+import { onMounted, ref } from "vue";
 
 type CardProps = {
   category: string
@@ -18,10 +18,15 @@ onMounted(async () => {
   console.log(props.category);
 });
 
+const refetchFact = async () => {
+  fact.value = await fetchFact(props.category);
+};
+
 const capitalizeFirstLetter = (str: string): string => {
   if (str.length === 0) return str;
   return str.charAt(0).toUpperCase() + str.slice(1);
 };
+
 
 </script>
 
@@ -29,7 +34,7 @@ const capitalizeFirstLetter = (str: string): string => {
   <div class="card">
     <section class="card_header">
       <h3>A cool <span class="card_title">{{ capitalizeFirstLetter(category) }}</span> Fact</h3>
-      <Arrow_button />
+      <Arrow_button :handle-click="refetchFact"/>
     </section>
 
     <p class="description">{{ fact || description }}</p>

@@ -1,10 +1,16 @@
 <script setup lang="ts">
-
 import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
+
+type buttonProps = {
+  handleClick: () => void
+}
+
+const { handleClick } = defineProps<buttonProps>()
+
 </script>
 
 <template>
-  <div class="arrow_button">
+  <div class="arrow_button" @click="handleClick">
     <font-awesome-icon icon="fa-solid fa-arrow-down" size="xl" />
   </div>
 
