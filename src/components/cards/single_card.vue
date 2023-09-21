@@ -2,7 +2,7 @@
 import Arrow_button from "@/components/arrow_button.vue";
 import { fetchFact } from "@/data/fetchApi";
 import { onMounted, ref } from "vue";
-import type { LogsType } from "@/components/cards/cards_list.vue";
+import type { LogsType } from "@/components/logs/logs_list.vue";
 
 export type CardProps = {
   category: string
@@ -45,9 +45,9 @@ const refetchFact = async () => {
   height: 300px;
   background-color: #fff;
   border-radius: 10px;
-  box-shadow: 0 0 10px rgba(0,0,0,0.2);
-  border: 1px solid gray;
-  padding: 25px;
+  box-shadow: 0 5px 10px rgba(0,0,0,0.2);
+  border: 2px solid lightgray;
+  padding: 30px;
 }
 
 .card_header {
@@ -56,7 +56,7 @@ const refetchFact = async () => {
   align-items: center;
 }
 
-.card_title span {
+.card_title {
   font-weight: bold;
   text-decoration: underline;
   text-transform: capitalize;
@@ -65,5 +65,6 @@ const refetchFact = async () => {
 .description {
   font-size: 1.1rem;
   font-weight: 500;
+  margin-top: 25px;
 }
 </style>

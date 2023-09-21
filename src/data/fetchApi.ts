@@ -4,8 +4,7 @@ export async function fetchFact(category: string): Promise<(any | string)[] | nu
         if (response.ok) {
             const data = await response.text();
             const now = new Date();
-            const options = { day: '2-digit', month: '2-digit', hour: '2-digit', minute: '2-digit' };
-            const date = Intl.DateTimeFormat('fr-FR', options).format(now);
+            const date = Intl.DateTimeFormat('fr-FR', { day: '2-digit', month: '2-digit', hour: '2-digit', minute: '2-digit' }).format(now);
             return [ date, data ];
         } else {
             console.error(`Bad API request for: ${category}`);

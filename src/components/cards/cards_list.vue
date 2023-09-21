@@ -2,6 +2,8 @@
 import Single_card from "@/components/cards/single_card.vue";
 import type { CardProps } from "@/components/cards/single_card.vue";
 import {ref} from "vue";
+import Logs_list from "@/components/logs/logs_list.vue";
+import type { LogsType } from "@/components/logs/logs_list.vue";
 
 const cards = ref<CardProps[]>([
   {
@@ -14,12 +16,6 @@ const cards = ref<CardProps[]>([
     description: "September 21st is the day in 1961 that Maiden flight of the CH-47 Chinook transportation helicopter.",
   }
 ]);
-
-export type LogsType = {
-  category: string
-  description: string
-  date: string
-}
 
 const logs = ref<Array<LogsType>>([]);
 
@@ -34,16 +30,7 @@ const addLogs = (log: LogsType) => {
     <div class="cards">
       <Single_card v-for="(card, key) in cards" :description="card.description" :category="card.category" :key="key" :fetch-logs="addLogs"/>
     </div>
-    <div class="logs">
-      <h3 class="logs_title">Logs</h3>
-      <div v-for="(log, index) in logs" :key="index">
-        <div>
-          <p class="logs_date">{{ log.date }}</p>
-          <p class="logs_category">{{ log.category }} Fact</p>
-          <p>{{ log.description }}</p>
-        </div>
-      </div>
-    </div>
+    <Logs_list :logs="logs" />
   </main>
 </template>
 
@@ -51,10 +38,20 @@ const addLogs = (log: LogsType) => {
 
 main {
   display: flex;
+  width: 90%;
   justify-content: center;
   align-items: center;
   height: 700px;
   column-gap: 100px;
+  margin: auto;
+}
+
+@media (max-width: 900px) {
+  main {
+    flex-direction: column;
+    height: auto;
+    row-gap: 50px;
+  }
 }
 
 .cards {
@@ -63,28 +60,6 @@ main {
   row-gap: 40px;
 }
 
-.logs {
-  width: 50%;
-  background-color: #fff;
-  height: 100%;
-  padding: 35px;
-  display: flex;
-  flex-direction: column;
-  row-gap: 20px;
-  overflow-y: scroll;
-}
 
-.logs_title {
-  text-decoration: underline;
-}
-
-.logs_date, .logs_category {
-  font-weight: bold;
-  font-size: 1.1em;
-}
-
-.logs_category {
-  text-transform: capitalize;
-}
 
 </style>
